@@ -1,0 +1,26 @@
+{
+    "name": "aweram/metable",
+    "description": "Meta model for create meta tags",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir",
+            "email": "aweram-team@yandex.ru"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Aweram\\Fileable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aweram\\Metable\\MetableServiceProvider"
+            ]
+        }
+    }
+}
