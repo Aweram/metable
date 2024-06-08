@@ -13,6 +13,7 @@ class MetableServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-
+        // Миграции
+        $this->loadMigrationsFrom(__DIR__ . "/database/migrations");
     }
 }
