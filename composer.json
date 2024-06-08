@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Aweram\\Fileable\\": "src/"
+            "Aweram\\Metable\\": "src/"
         }
     },
     "extra": {
