@@ -10,6 +10,8 @@
         }
     ],
     "require": {
+        "laravel/framework": "^11.0",
+        "aweram/tailwindcss-theme": "@dev"
     },
     "autoload": {
         "psr-4": {

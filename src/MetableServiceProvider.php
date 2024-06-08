@@ -1,5 +1,7 @@
 <?php
 
+namespace Aweram\Metable;
+
 use Illuminate\Support\ServiceProvider;
 
 class MetableServiceProvider extends ServiceProvider
