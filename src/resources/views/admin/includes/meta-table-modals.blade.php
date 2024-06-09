@@ -1,5 +1,5 @@
 <x-tt::modal.aside wire:model="displayData">
-    <x-slot name="title">{{ $metaId ? __("Edit meta") : __("Add meta") }}</x-slot>
+    <x-slot name="title">{{ $metaId ? __("Edit meta tag") : __("Add meta tag") }}</x-slot>
     <x-slot name="content">
         <form wire:submit.prevent="{{ $metaId ? 'update' : 'store' }}"
               class="space-y-indent-half" id="metaDataForm">
@@ -36,6 +36,15 @@
                        wire:loading.attr="disabled"
                        wire:model="property">
                 <x-tt::form.error name="property" />
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox"
+                       class="form-check-input" id="metaSeparated"
+                       wire:model="separated">
+                <label for="metaSeparated" class="form-check-label">
+                    {{ __("Don't create og") }}
+                </label>
             </div>
 
             <div class="flex items-center space-x-indent-half">

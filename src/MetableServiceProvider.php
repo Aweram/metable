@@ -3,6 +3,8 @@
 namespace Aweram\Metable;
 
 use Aweram\Metable\Livewire\MetaIndexWire;
+use Aweram\Metable\Models\Meta;
+use Aweram\Metable\Observers\MetaObserver;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
@@ -19,6 +21,11 @@ class MetableServiceProvider extends ServiceProvider
             "ma-metas",
             $component ?? MetaIndexWire::class
         );
+
+        // Наблюдатели
+        $metaObserver = config("metable.customMetaObserver") ?? MetaObserver::class;
+        $metaModel = config("metable.customMetaModel") ?? Meta::class;
+        $metaModel::observe($metaObserver);
     }
 
     public function register(): void

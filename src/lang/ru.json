@@ -1,7 +1,9 @@
 {
-    "Add meta": "Добавить meta",
-    "Edit meta": "Редактировать meta",
+    "Add meta tag": "Добавить мета тег",
+    "Edit meta tag": "Редактировать мета тег",
     "Add": "Добавить",
     "Cancel": "Отмена",
-    "Update": "Отменить"
+    "Update": "Отменить",
+    "Meta tag successfully added": "Мета тег успешно добавлен",
+    "Don't create og": "Не создавать og"
 }
