@@ -19,6 +19,8 @@ class MetaIndexWire extends Component
     public string|null $property = null;
     public bool $separated = false;
 
+    public bool $displayDelete = false;
+
     public function rules(): array
     {
         return [
@@ -84,10 +86,55 @@ class MetaIndexWire extends Component
         $this->displayData = true;
     }
 
+    public function update(): void
+    {
+        // Найти тег
+        $meta = $this->findMeta();
+        if (! $meta) return;
+        // Валидация
+        $this->validate();
+        $meta->update([
+            "name" => $this->name,
+            "content" => $this->content,
+            "property" => $this->property,
+            "separated" => $this->separated ? now() : null,
+        ]);
+        $this->closeData();
+    }
+
     public function closeData(): void
     {
         $this->resetFields();
         $this->displayData = false;
+    }
+
+    public function showDelete(int $metaId): void
+    {
+        $this->resetFields();
+        $this->metaId = $metaId;
+        // Найти тег
+        $meta = $this->findMeta();
+        if (! $meta) return;
+
+        $this->displayDelete = true;
+    }
+
+    public function closeDelete(): void
+    {
+        $this->displayDelete = false;
+        $this->resetFields();
+    }
+
+    public function confirmDelete(): void
+    {
+        // Найти тег
+        $meta = $this->findMeta();
+        if (! $meta) return;
+
+        $meta->delete();
+        session()->flash("success", __("Meta tag successfully deleted"));
+
+        $this->closeDelete();
     }
 
     private function resetFields(): void

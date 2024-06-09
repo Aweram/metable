@@ -1,3 +1,8 @@
+<x-tt::modal.confirm wire:model="displayDelete">
+    <x-slot name="title">{{ __("Delete meta tag") }}</x-slot>
+    <x-slot name="text">{{ __("It will be impossible to restore the meta tag!") }}</x-slot>
+</x-tt::modal.confirm>
+
 <x-tt::modal.aside wire:model="displayData">
     <x-slot name="title">{{ $metaId ? __("Edit meta tag") : __("Add meta tag") }}</x-slot>
     <x-slot name="content">

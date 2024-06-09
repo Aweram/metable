@@ -2,6 +2,7 @@
 
 namespace Aweram\Metable;
 
+use Aweram\Metable\Helpers\MetaActionsManager;
 use Aweram\Metable\Livewire\MetaIndexWire;
 use Aweram\Metable\Models\Meta;
 use Aweram\Metable\Observers\MetaObserver;
@@ -40,5 +41,10 @@ class MetableServiceProvider extends ServiceProvider
 
         // Подключение переводов
         $this->loadJsonTranslationsFrom(__DIR__ . "/lang");
+
+        // Facades
+        $this->app->singleton("meta-actions", function () {
+            return new MetaActionsManager;
+        });
     }
 }

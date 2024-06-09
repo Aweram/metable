@@ -10,10 +10,25 @@
         @foreach($metas as $item)
             <tr>
                 <td>
-                    <code class="text-[#d63384] text-sm">{!! htmlspecialchars($item->clear_render) !!}</code>
+                    <code class="text-[#d63384] text-sm text-nowrap">
+                        {!! htmlspecialchars($item->clear_render) !!}
+                    </code>
                 </td>
-                <td>{{ $item->separated ? __("Yes") : __("No") }}</td>
-                <td>Actions</td>
+                <td>{{ $item->separated ? __("No") : __("Yes") }}</td>
+                <td>
+                    <div class="flex justify-center">
+                        <button type="button" class="btn btn-dark px-btn-x-ico rounded-e-none"
+                                wire:loading.attr="disabled"
+                                wire:click="showEdit({{ $item->id }})">
+                            <x-tt::ico.edit />
+                        </button>
+                        <button type="button" class="btn btn-danger px-btn-x-ico rounded-s-none"
+                                wire:loading.attr="disabled"
+                                wire:click="showDelete({{ $item->id }})">
+                            <x-tt::ico.trash />
+                        </button>
+                    </div>
+                </td>
             </tr>
         @endforeach
     </x-slot>

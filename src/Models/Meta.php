@@ -47,11 +47,12 @@ class Meta extends Model implements MetaModelInterface
         ]);
     }
 
-    public function getClearRenderAttribute()
+    public function getClearRenderAttribute(): string
     {
         $str = $this->render->render();
         $str = str_replace("<!--[if BLOCK]><![endif]-->", "", $str);
         $str = str_replace("<!--[if ENDBLOCK]><![endif]-->", "", $str);
+        $str = str_replace("\n", "", $str);
         return $str;
     }
 }

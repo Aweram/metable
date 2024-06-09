@@ -2,6 +2,8 @@
 
 namespace Aweram\Metable\Observers;
 
+use Aweram\Metable\Facades\MetaActions;
+use Aweram\Metable\Interfaces\MetaModelInterface;
 use Aweram\Metable\Models\Meta;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,11 +21,11 @@ class MetaObserver
             $data["meta_id"] = $meta->id;
             $metaModel = config("metable.customMetaModel") ?? Meta::class;
             $metaModel::create($data);
+            MetaActions::forgetByModelCache($meta->metable);
         }
-        // TODO: forget cache
     }
 
-    public function updated(Model $meta): void
+    public function updated(MetaModelInterface $meta): void
     {
         $child = $meta->child;
         if (! empty($child) && empty($child->separated)) {
@@ -35,13 +37,13 @@ class MetaObserver
             $data["property"] = $child->property;
             $child->update($data);
         }
-        // TODO: forget cache
+        MetaActions::forgetByModelCache($meta->metable);
     }
 
-    public function deleted(Model $meta)
+    public function deleted(MetaModelInterface $meta)
     {
         $child = $meta->child;
         if (! empty($child)) $child->delete();
-        // TODO: forget cache
+        MetaActions::forgetByModelCache($meta->metable);
     }
 }

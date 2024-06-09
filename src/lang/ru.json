@@ -11,5 +11,8 @@
     "Create og": "Создавать og",
     "Actions": "Действия",
     "Yes": "Да",
-    "No": "Нет"
+    "No": "Нет",
+    "Meta tag successfully deleted": "Мета тег успешно удален",
+    "Delete meta tag": "Удалить мета тег",
+    "It will be impossible to restore the meta tag!": "Будет невозможно восстановить мета тег!"
 }
