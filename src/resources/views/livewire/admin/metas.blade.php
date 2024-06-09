@@ -7,6 +7,7 @@
                 <x-tt::notifications.success />
             </div>
 
+            @include("ma::admin.includes.meta-table")
             @include("ma::admin.includes.meta-table-modals")
         </div>
     </div>

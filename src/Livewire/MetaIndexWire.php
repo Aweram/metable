@@ -2,7 +2,9 @@
 
 namespace Aweram\Metable\Livewire;
 
+use Aweram\Metable\Interfaces\MetaModelInterface;
 use Aweram\Metable\Interfaces\ShouldMetaInterface;
+use Aweram\Metable\Models\Meta;
 use Livewire\Component;
 
 class MetaIndexWire extends Component
@@ -37,7 +39,12 @@ class MetaIndexWire extends Component
 
     public function render()
     {
-        return view('ma::livewire.admin.metas');
+        $metaClass = config("metable.customMetaModel") ?? Meta::class;
+        $metas = $metaClass::query()
+            ->select("id", "name", "content", "property", "separated")
+            ->orderBy("name")
+            ->get();
+        return view('ma::livewire.admin.metas', compact("metas"));
     }
 
     public function showCreate(): void
@@ -61,6 +68,22 @@ class MetaIndexWire extends Component
         $this->closeData();
     }
 
+    public function showEdit(int $metaId): void
+    {
+        $this->resetFields();
+        $this->metaId = $metaId;
+        // Найти тег
+        $meta = $this->findMeta();
+        if (! $meta) return;
+
+        $this->name = $meta->name;
+        $this->content = $meta->content;
+        $this->property = $meta->property;
+        $this->separated = $meta->separated ? true : false;
+
+        $this->displayData = true;
+    }
+
     public function closeData(): void
     {
         $this->resetFields();
@@ -70,5 +93,17 @@ class MetaIndexWire extends Component
     private function resetFields(): void
     {
         $this->reset(["name", "content", "property", "metaId"]);
+    }
+
+    private function findMeta(): ?MetaModelInterface
+    {
+        $metaClass = config("metable.customMetaModel") ?? Meta::class;
+        $meta = $metaClass::find($this->metaId);
+        if (! $meta) {
+            session()->flash("error", __("Meta tag not found"));
+            $this->closeData();
+            return null;
+        }
+        return $meta;
     }
 }

@@ -2,13 +2,15 @@
 
 namespace Aweram\Metable\Models;
 
+use Aweram\Metable\Interfaces\MetaModelInterface;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Meta extends Model
+class Meta extends Model implements MetaModelInterface
 {
     use HasFactory;
 
@@ -36,5 +38,20 @@ class Meta extends Model
     public function metable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function getRenderAttribute(): View
+    {
+        return view("ma::layouts.meta.render", [
+            "meta" => $this
+        ]);
+    }
+
+    public function getClearRenderAttribute()
+    {
+        $str = $this->render->render();
+        $str = str_replace("<!--[if BLOCK]><![endif]-->", "", $str);
+        $str = str_replace("<!--[if ENDBLOCK]><![endif]-->", "", $str);
+        return $str;
     }
 }
