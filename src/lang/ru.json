@@ -14,5 +14,6 @@
     "No": "Нет",
     "Meta tag successfully deleted": "Мета тег успешно удален",
     "Delete meta tag": "Удалить мета тег",
-    "It will be impossible to restore the meta tag!": "Будет невозможно восстановить мета тег!"
+    "It will be impossible to restore the meta tag!": "Будет невозможно восстановить мета тег!",
+    "Meta tag successfully updated": "Мета тег успешно обновлен"
 }

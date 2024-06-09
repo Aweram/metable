@@ -99,6 +99,8 @@ class MetaIndexWire extends Component
             "property" => $this->property,
             "separated" => $this->separated ? now() : null,
         ]);
+
+        session()->flash("success", __("Meta tag successfully updated"));
         $this->closeData();
     }
 
