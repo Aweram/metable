@@ -30,5 +30,8 @@ class MetableServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . "/config/metable.php", "metable"
         );
+
+        // Подключение переводов
+        $this->loadJsonTranslationsFrom(__DIR__ . "/lang");
     }
 }

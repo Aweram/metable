@@ -1,6 +1,6 @@
 <?php
 
-namespace Aweram\Metable;
+namespace Aweram\Metable\Traits;
 
 use Aweram\Metable\Models\Meta;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
