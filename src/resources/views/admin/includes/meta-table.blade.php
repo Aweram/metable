@@ -1,8 +1,8 @@
 <x-tt::table>
     <x-slot name="head">
         <tr>
-            <x-tt::table.heading class="text-left">{{ __("Render tag") }}</x-tt::table.heading>
-            <x-tt::table.heading class="text-left">{{ __("Create og") }}</x-tt::table.heading>
+            <x-tt::table.heading class="text-left"><span class="text-nowrap">{{ __("Render tag") }}</span></x-tt::table.heading>
+            <x-tt::table.heading class="text-left"><span class="text-nowrap">{{ __("Create og") }}</span></x-tt::table.heading>
             <x-tt::table.heading>{{ __("Actions") }}</x-tt::table.heading>
         </tr>
     </x-slot>
