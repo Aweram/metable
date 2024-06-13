@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait ShouldMeta
 {
-    protected static function bootShouldMeta()
+    protected static function bootShouldMeta(): void
     {
+        static::created(function (ShouldMetaInterface $model) {
+            MetaActions::createDefault($model);
+        });
+
         static::deleting(function (ShouldMetaInterface $model) {
             MetaActions::clearByModel($model);
         });
