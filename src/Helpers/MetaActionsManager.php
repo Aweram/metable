@@ -12,7 +12,7 @@ class MetaActionsManager
     public function createDefault(ShouldMetaInterface $model): void
     {
         $metas = $this->getByName($model, "title");
-        if (! $metas->count()) {
+        if (! $metas) {
             $model->metas()->create([
                 "name" => "title",
                 "content" => $model->title
