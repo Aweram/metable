@@ -44,7 +44,7 @@ class MetaIndexWire extends Component
         $metaClass = config("metable.customMetaModel") ?? Meta::class;
         $metas = $metaClass::query()
             ->select("id", "name", "content", "property", "separated")
-            ->where("meta_id", $this->model->id)
+            ->where("metable_id", $this->model->id)
             ->where("metable_type", $this->model::class)
             ->orderBy("name")
             ->get();
