@@ -68,7 +68,7 @@ class MetaIndexWire extends Component
             "separated" => $this->separated ? now() : null,
         ]);
 
-        session()->flash("success", __("Meta tag successfully added"));
+        session()->flash("metas-success", __("Meta tag successfully added"));
         $this->closeData();
     }
 
@@ -102,7 +102,7 @@ class MetaIndexWire extends Component
             "separated" => $this->separated ? now() : null,
         ]);
 
-        session()->flash("success", __("Meta tag successfully updated"));
+        session()->flash("metas-success", __("Meta tag successfully updated"));
         $this->closeData();
     }
 
@@ -136,7 +136,7 @@ class MetaIndexWire extends Component
         if (! $meta) return;
 
         $meta->delete();
-        session()->flash("success", __("Meta tag successfully deleted"));
+        session()->flash("metas-success", __("Meta tag successfully deleted"));
 
         $this->closeDelete();
     }
@@ -151,7 +151,7 @@ class MetaIndexWire extends Component
         $metaClass = config("metable.customMetaModel") ?? Meta::class;
         $meta = $metaClass::find($this->metaId);
         if (! $meta) {
-            session()->flash("error", __("Meta tag not found"));
+            session()->flash("metas-error", __("Meta tag not found"));
             $this->closeData();
             return null;
         }

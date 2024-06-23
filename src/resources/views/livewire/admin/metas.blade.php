@@ -8,8 +8,8 @@
 
                         @include("ma::admin.includes.meta-search")
                     </div>
-                    <x-tt::notifications.error />
-                    <x-tt::notifications.success />
+                    <x-tt::notifications.error prefix="metas-" />
+                    <x-tt::notifications.success prefix="metas-" />
                 </div>
             </div>
 
