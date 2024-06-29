@@ -20,7 +20,7 @@ class MetaActionsManager
         }
 
         if (empty($model->short)) return;
-        $metas = $this->getByName($model, "short");
+        $metas = $this->getByName($model, "description");
         if (! $metas) {
             $model->metas()->create([
                 "name" => "description",
