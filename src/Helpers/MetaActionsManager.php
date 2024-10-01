@@ -66,6 +66,7 @@ class MetaActionsManager
 
     private function makeCacheKey(ShouldMetaInterface $model): string
     {
-        return "meta-model:{$model->table}-{$model->id}";
+        $table = $model->getTable();
+        return "meta-model:{$table}-{$model->id}";
     }
 }
