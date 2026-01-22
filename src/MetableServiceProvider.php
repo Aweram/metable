@@ -3,9 +3,11 @@
 namespace Aweram\Metable;
 
 use Aweram\Metable\Helpers\MetaActionsManager;
-use Aweram\Metable\Livewire\MetaIndexWire;
+use Aweram\Metable\Livewire\Admin\Metas\IndexWire as MetaIndexWire;
+use Aweram\Metable\Livewire\Admin\Metas\PageWire as MetaPageWire;
 use Aweram\Metable\Models\Meta;
 use Aweram\Metable\Observers\MetaObserver;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
@@ -23,10 +25,23 @@ class MetableServiceProvider extends ServiceProvider
             $component ?? MetaIndexWire::class
         );
 
+        $component = config("metable.customMetaPageComponent");
+        Livewire::component(
+            "ma-meta-pages",
+            $component ?? MetaPageWire::class
+        );
+
         // Наблюдатели
         $metaObserver = config("metable.customMetaObserver") ?? MetaObserver::class;
         $metaModel = config("metable.customMetaModel") ?? Meta::class;
         $metaModel::observe($metaObserver);
+
+        // Policy
+        $metaModel = config("metable.customMetaModel") ?? Meta::class;
+        Gate::policy($metaModel, config("metable.metaPolicy"));
+
+        // Добавить политики в конфигурацию
+        $this->expandConfiguration();
     }
 
     public function register(): void
@@ -42,9 +57,25 @@ class MetableServiceProvider extends ServiceProvider
         // Подключение переводов
         $this->loadJsonTranslationsFrom(__DIR__ . "/lang");
 
+        // Routes
+        $this->loadRoutesFrom(__DIR__ . "/routes/admin.php");
+
         // Facades
         $this->app->singleton("meta-actions", function () {
             return new MetaActionsManager;
         });
+    }
+
+    private function expandConfiguration(): void
+    {
+        $um = app()->config["user-management"];
+        $permissions = $um["permissions"];
+        $ma = app()->config["metable"];
+        $permissions[] = [
+            "title" => $ma["metaPolicyTitle"],
+            "policy" => $ma["metaPolicy"],
+            "key" => $ma["metaPolicyKey"]
+        ];
+        app()->config["user-management.permissions"] = $permissions;
     }
 }

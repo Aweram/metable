@@ -1,0 +1,55 @@
+<?php
+
+namespace Aweram\Metable\Livewire\Admin\Metas;
+
+use Aweram\Metable\Interfaces\MetaModelInterface;
+use Aweram\Metable\Interfaces\ShouldMetaInterface;
+use Aweram\Metable\Models\Meta;
+use Aweram\Metable\Traits\MetaActionsTrait;
+use Illuminate\Contracts\View\View;
+use Livewire\Component;
+
+class IndexWire extends Component
+{
+    use MetaActionsTrait;
+
+    public ShouldMetaInterface $model;
+
+    public function render(): View
+    {
+        $metaClass = config("metable.customMetaModel") ?? Meta::class;
+        $metas = $metaClass::query()
+            ->select("id", "name", "content", "property", "separated")
+            ->where("metable_id", $this->model->id)
+            ->where("metable_type", $this->model::class)
+            ->orderBy("name")
+            ->get();
+        return view('ma::livewire.admin.metas.index-wire', compact("metas"));
+    }
+
+    public function showCreate(): void
+    {
+        $this->resetFields();
+        $check = $this->checkAuth("create");
+        if (! $check) return;
+        $this->displayData = true;
+    }
+
+    public function store(): void
+    {
+        $check = $this->checkAuth("create");
+        if (! $check) return;
+
+        // Валидация
+        $this->validate();
+        $this->model->metas()->create([
+            "name" => $this->name,
+            "content" => $this->content,
+            "property" => $this->property,
+            "separated" => $this->separated ? now() : null,
+        ]);
+
+        session()->flash("metas-success", __("Meta tag successfully added"));
+        $this->closeData();
+    }
+}
